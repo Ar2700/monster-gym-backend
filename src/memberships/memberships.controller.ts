@@ -33,6 +33,12 @@ export class MembershipsController {
     return this.membershipsService.findAll();
   }
 
+  @Get('user/:id')
+  @ApiOperation({ summary: 'Get membership by user id' })
+  findOneIdUser(@Param('id') id: string) {
+    return this.membershipsService.findOneIdUser(id);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get membership by id' })
   findOne(@Param('id') id: string) {

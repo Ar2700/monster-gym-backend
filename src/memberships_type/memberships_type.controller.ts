@@ -17,7 +17,8 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 @ApiBearerAuth()
 @ApiTags('Membersships Type')
 @Controller('memberships-type')
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
+/*GUARDS ARE NOT ENABLED FOR THE PROJECT AT THE MOMENT */
 export class MembershipsTypeController {
   constructor(
     private readonly membershipsTypeService: MembershipsTypeService,

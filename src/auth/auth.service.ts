@@ -27,7 +27,7 @@ export class AuthService {
     });
     if (existingUsername)
       throw new HttpException(
-        'Username is already in use',
+        { message: 'Username is already in use' },
         HttpStatus.BAD_REQUEST,
       );
 
@@ -36,13 +36,16 @@ export class AuthService {
     });
     if (existingUser)
       throw new HttpException(
-        'Email is already in use',
+        { message: 'Email is already in use' },
         HttpStatus.BAD_REQUEST,
       );
 
     const role = await this.roleRepository.findOne({ where: { id: id_roles } });
     if (!role) {
-      throw new HttpException('Role not found', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        { message: 'Role not found' },
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const createdAt = new Date();
@@ -66,11 +69,17 @@ export class AuthService {
 
     const findUser = await this.userRepository.findOne({ where: { email } });
     if (!findUser)
-      throw new HttpException('USER_EMAIL_NOT_FOUND', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        { message: 'USER_EMAIL_NOT_FOUND' },
+        HttpStatus.NOT_FOUND,
+      );
 
     const checkPassword = await compare(password, findUser.password);
     if (!checkPassword)
-      throw new HttpException('PASSWORD_IS_WRONG', HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        { message: 'PASSWORD_IS_WRONG' },
+        HttpStatus.FORBIDDEN,
+      );
 
     const payload = { id: findUser.id, name: findUser.name };
     const token = await this.jwtService.sign(payload);
